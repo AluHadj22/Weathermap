@@ -45,3 +45,13 @@ WeatherMap - это мое тестовое задание для получен
 - Автор: Alu
 - Email: alu.hadjiev33@yandex.ru
 - GitHub: [Your GitHub Profile](https://github.com/AluHadj22)
+
+
+![WeathermapPHOTO](https://github.com/AluHadj22/Weathermap/assets/140946881/145328fb-db49-4afd-9643-920ecba74106)
+
+
+
+
+
+
+  
