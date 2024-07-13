@@ -1,6 +1,6 @@
-# Проект WeatherMap
+#  WeatherMap
 
-## О проекте
+## проектах лаьц
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![Django](https://img.shields.io/badge/Django-green)
 ![Html](https://img.shields.io/badge/html-orange)
@@ -8,43 +8,43 @@
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-blue)
 
 
-WeatherMap - Этот проект разработан на языке Python с использованием фреймворка Django, а также HTML и Bootstrap,json. Он позволяет пользователю ввести название своего города и получить данные о погоде, такие как температура, ветер, давление и влажность. Для получения данных о погоде используется API OpenWeatherMap.
+WeatherMap - Иза веб приложени ю хенан х1оттам хьожуш. Ахь хьай г1али ц1е язич цо хьун жоп лур ду. Температури, мох а, давлени а гойтуш. Из django фреймворк т1ехь йин ю, ас мел йол данныш а API OpenWeatherMap т1ер схьа оьцуш ю get запросш цане.
 
-## Настройка проекта
-1. Установите Python и Django на свой компьютер.
-2. Клонируйте репозиторий с проектом с помощью следующей команды:
+## Проект нисош
+1.  Python, Django а оьшун ю хьун копьютер т1аьхь.
+2. х1ар репозиторий хьан дехьа якх езар ю. Терминал чу вале, git clone е цу чохь:
    ```
    git clone https://github.com/AluHadj22/Weathermap.git
    ```
-3. Перейдите в директорию проекта:
+3. Т1аккха директори чу вал терминал чохул хьай редактор чохь йол:
    ```
    cd Weathermap
    ```
-4. Установите зависимости, указанные в файле `requirements.txt`, с помощью команды:
+4. Цу чохь х1ар file хил езун `requirements.txt`, цу чу ас оьш йол библиотекш язина хьун. Х1ар устанавить е терминал чохул:
    ```
    pip install -r requirements.txt
    ```
-5. В файле `settings.py` укажите ваш API ключ от OpenWeatherMap в переменной `appid`.
-6. Запустите миграции, чтобы создать базу данных:
+5. file `settings.py` чохь хьай API дог1 OpenWeatherMap чур даз де переменны `appid` чохь.
+6. Миграциш запустить е:
    ```
    python manage.py migrate
    ```
-7. Запустите сервер разработки Django:
+7. Т1аккха хьай local server схьа лат е:
    ```
    python manage.py runserver
    ```
-8. Откройте веб-браузер и перейдите по адресу `http://127.0.0.1:8000/` - теперь вы можете использовать WeatherMap для получения данных о погоде.
+8. Браузер чохь х1окх адресс цане дехьа вал. Порт ишт хил езун ахь цхьа кег ца динехь `http://127.0.0.1:8000/` 
 
-## Используемые технологии
+## хьанца кхоьллин х1ар
 - Python
 - Django
 - HTML
 - Bootstrap
 
-## Контакты
-- Автор: Alu
+## Соьц з1айне вала
+- Alu
 - Email: alu.hadjiev33@yandex.ru
-- GitHub: [Мой гитхаб профиль](https://github.com/AluHadj22)
+- GitHub: [сан github](https://github.com/AluHadj22)
 
 
 ![WeathermapPHOTO](https://github.com/AluHadj22/Weathermap/assets/140946881/145328fb-db49-4afd-9643-920ecba74106)
