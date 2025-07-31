@@ -1,0 +1,360 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherApp - Погода с эффектами</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Общие стили и анимация фона */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #e0e0e0;
+            margin: 0;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Заголовок и навигация */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 15px 30px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 50px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #ffffff;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: translateY(-3px);
+            color: #4CAF50; /* Цвет акцента */
+        }
+
+        .logo svg {
+            margin-right: 10px;
+            fill: #ffffff;
+            transition: transform 0.3s ease;
+        }
+        .logo-lightning {
+            width: 30px; /* Уменьшили до 30 пикселей */
+            height: auto; /* Высота будет подстраиваться автоматически, сохраняя пропорции */
+            margin-right: 10px; /* Оставляем небольшой отступ справа */
+            display: block; /* Можно оставить или поменять на inline-block, если нужно */
+    }
+
+    .logo:hover .logo-lightning { /* Если у вас есть анимация при наведении */
+        transform: scale(1.1);
+    }
+    
+
+        .logo:hover svg {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            display: block;
+            margin-top: 5px;
+            right: 0;
+            background: #4CAF50;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Стиль для контейнера изображения */
+        .image-container {
+            display: flex;
+            justify-content: center; /* Центрируем содержимое по горизонтали */
+            align-items: center;     /* Центрируем содержимое по вертикали (если нужно) */
+            margin-bottom: 20px;     /* Отступ снизу, чтобы отделить от заголовка */
+            width: 100%;             /* Занимает всю доступную ширину */
+        }
+
+        .sela-image {
+            width: 300px; /* Уменьшаем ширину изображения */
+            height: auto; /* Высота подстраивается автоматически */
+            display: block; /* Убираем лишние отступы под изображением */
+            animation: pulse 2s infinite ease-in-out; /* Добавляем пульсирующую анимацию */
+        }
+
+        /* Главный заголовок */
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5em;
+            margin-bottom: 40px;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(76, 175, 80, 0.7);
+            animation: fadeInDown 1s ease-out forwards;
+        }
+
+        /* Форма ввода */
+        .weather-form {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 600px;
+            width: 100%;
+            margin-top: 20px;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+            opacity: 0; /* Начальное состояние */
+        }
+
+        .weather-form .form-control {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 1.1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .weather-form .form-control:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.6);
+        }
+
+        .weather-form .form-control::placeholder {
+            color: rgba(220, 220, 220, 0.7);
+        }
+
+        .weather-form .btn-primary {
+            background: linear-gradient(90deg, #4CAF50, #388E3C);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #ffffff;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .weather-form .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.7);
+            background: linear-gradient(90deg, #388E3C, #4CAF50);
+        }
+
+        /* Результаты погоды */
+        .weather-info {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: scaleUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform-origin: center;
+        }
+
+        .weather-info h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+        }
+
+        .weather-info p {
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            line-height: 1.6;
+            opacity: 0; /* Для поэтапного появления */
+            transform: translateY(10px);
+            animation: fadeInUpParagraph 0.5s ease-out forwards;
+        }
+
+        .weather-info p:nth-child(2) { animation-delay: 0.2s; }
+        .weather-info p:nth-child(3) { animation-delay: 0.4s; }
+        .weather-info p:nth-child(4) { animation-delay: 0.6s; }
+        .weather-info p:nth-child(5) { animation-delay: 0.8s; }
+        .weather-info p:nth-child(6) { animation-delay: 1s; }
+
+        .weather-info b {
+            color: #4CAF50; /* Цвет акцента для меток */
+            font-weight: 600;
+        }
+
+        .weather-info sup {
+            font-size: 0.7em;
+            color: #cccccc;
+        }
+
+        /* Анимации */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleUp {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeInUpParagraph {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse { /* Анимация пульсации */
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 15px;
+            }
+            .logo {
+                margin-bottom: 10px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .nav-links a {
+                margin: 5px 10px;
+            }
+            h1 {
+                font-size: 2.8em;
+            }
+            .weather-form, .weather-info {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        
+    <a href="/" class="logo">
+        
+        <img src="{% static 'weather/images/arrow.jpg' %}" alt="Логотип молнии" class="logo-lightning"> 
+        <span>WeatherApp</span>
+    </a>
+
+        <nav class="nav-links">
+            <a href="https://t.me/ALUUUU2">Контакты</a>
+            <a href="https://github.com/AluHadj22">GitHub</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Блок с изображением Селы -->
+        <div class="image-container">
+             <img src="{% static 'weather/images/Sela.jpg' %}" alt="Изображение Селы" class="sela-image">
+        </div>
+
+        <h1>WeatherApp</h1>
+
+        <form method="POST" action="{% url 'index' %}" class="weather-form">
+            {% csrf_token %}
+            <div class="row g-2">
+                <div class="col-md">
+                    <input type="text" class="form-control" placeholder="Введите город" name="city_name" required>
+                </div>
+                <div class="col-md-auto">
+                    <button type="submit" class="btn btn-primary">Показать погоду</button>
+                </div>
+            </div>
+        </form>
+
+        {% if info %}
+        <div class="weather-info">
+            <h2>Погода в вашем городе</h2>
+            <p><b>Город:</b> {{info.city}}</p>
+            <p><b>Температура:</b> {{info.temp}}<sup>o</sup></p>
+            <p><b>Ветер:</b> {{info.wind}} м/с, западный</p>
+            <p><b>Давление:</b> {{info.pres}} мм рт.ст.</p>
+            <p><b>Влажность:</b> {{info.humidity}}%</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+       
+    </script>
+
+</body>
+</html>
