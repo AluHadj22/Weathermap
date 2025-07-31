@@ -60,6 +60,7 @@ Bash
 
 
 
+![снимок22](https://github.com/user-attachments/assets/cdf6e41b-0587-46dd-b787-096ced985d9d)
 
 
   
