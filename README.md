@@ -61,9 +61,6 @@ Bash
 
 
 
-https://github.com/user-attachments/assets/66c1c491-fbdd-4c46-adf8-fd3e1a4ebb57
-
-
 
 
   
